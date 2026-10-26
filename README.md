@@ -1,116 +1,55 @@
 # Student Spending & Financial Stress Analysis
 
-## Business Context
-University students often experience financial stress, but it is unclear whether this stress is driven by discretionary overspending or unavoidable living expenses.  
-Understanding the true drivers of financial stress is important for designing effective budgeting tools, financial aid programs, and student-focused fintech solutions.
+## Business context
+This project explores how student income, financial aid, essential expenses, and discretionary spending relate to a rule-based financial-stress label. The goal is to identify patterns that could inform student budgeting and financial-aid product ideas.
 
-This project analyzes student spending data to identify the primary contributors to financial stress and translate analytical findings into actionable product insights.
-
----
-
-## Objective
-The objectives of this project are to:
-- Define a data-driven measure of financial stress
-- Analyze how financial stress varies across income levels and academic years
-- Compare spending behavior between financially stressed and non-stressed students
-- Derive actionable recommendations for student-focused financial products
-
----
-
-## Dataset Overview
-- **Source:** Student Spending Habits dataset (Kaggle)
-- **Size:** ~1000 students
-- **Key Features:**
-  - Monthly income and financial aid
-  - Detailed expense categories (housing, food, transportation, etc.)
-  - Demographic attributes such as age and year of study
-
----
+## Dataset
+- **Source:** Student Spending Habits dataset (Kaggle; add the exact dataset URL for reproducibility)
+- **Approximate size:** 1,000 students
+- **Fields:** monthly income, financial aid, expense categories, and student demographics such as age and year of study
 
 ## Methodology
 
-### Financial Stress Definition
-A student is classified as **financially stressed** if their **essential expenses exceed 70% of their effective income**, where effective income is defined as the sum of monthly income and financial aid.
+### Financial-stress rule
+A student is labelled **financially stressed** when essential expenses exceed 70% of effective income:
 
-A sensitivity analysis was performed across multiple thresholds (60%, 70%, 80%) to validate the robustness of this definition.
+`effective income = monthly income + financial aid`
 
----
+A sensitivity analysis compares 60%, 70%, and 80% thresholds.
 
-### Feature Engineering
-- **Essential expenses** were calculated by aggregating:
-  - Housing
-  - Food
-  - Transportation
-  - Health & wellness
-  - Books & supplies
-- **Non-essential expenses** were calculated separately using:
-  - Entertainment
-  - Personal care
-  - Technology
-  - Miscellaneous spending
-- **Income bands** were created using quantile-based segmentation to enable fair comparisons across students with different income levels.
+### Expense groups
+- **Essential:** housing, food, transportation, health and wellness, books and supplies
+- **Non-essential:** entertainment, personal care, technology, miscellaneous spending
 
----
+Income bands are formed using quantile-based segmentation. Students are also compared by academic year and stress label.
 
-### Segmentation Strategy
-Students were segmented by:
-- Income bands (low, lower-mid, upper-mid, high)
-- Year of study (freshman, sophomore, junior, senior)
-- Financial stress status (stressed vs non-stressed)
+## Findings recorded in the analysis
+- Approximately **79%** of students meet the selected 70% threshold.
+- The share labelled stressed decreases as income rises, but more than half of the highest-income group is still labelled stressed.
+- The stressed share rises from freshman to senior year in this dataset.
+- Average non-essential spending is reported as similar between the two groups, while essential spending is higher among the stressed group.
 
----
+These are descriptive findings from the analyzed dataset, not evidence that income or academic year causes financial stress.
 
-## Key Insights
+## Methodological limitation to keep in mind
+Because the stress label is *defined using essential expenses divided by effective income*, finding higher essential expenses among stressed students is partly built into the label itself. That comparison is not an independent validation of what causes stress. Stronger follow-up analysis could use a separate outcome measure, test alternative definitions, and examine how results change across the 60%, 70%, and 80% thresholds.
 
-### 1. Financial stress is widespread among students
-Approximately **79% of students** were classified as financially stressed using the selected threshold.
+The dataset is observational; the results should not be generalized to all university students without checking how the sample was collected and whether it is representative.
 
----
+## Product implications to explore
+- Improve visibility into essential costs and available financial aid.
+- Test early-warning alerts when essential costs take up a large share of effective income.
+- Explore cost-support and budgeting features without assuming discretionary spending is the main problem.
 
-### 2. Income strongly influences financial stress
-Financial stress decreases as income rises; however, even among the highest-income students, more than half still experience financial stress.
+These are hypotheses for product exploration, not proven interventions.
 
----
+## Tools and techniques
+- Python, Pandas, NumPy, Matplotlib
+- Data cleaning and exploratory data analysis
+- Feature engineering, quantile-based segmentation, sensitivity analysis
 
-### 3. Financial stress increases by year of study
-Stress levels rise steadily from freshman to senior year, suggesting that financial pressure accumulates as students become more financially independent and approach graduation.
+## Reproducibility
+Open `Notebook/Analysis.ipynb` and run the analysis with the dataset stored in the repository's `Data/` directory. Add the exact upstream dataset URL and document any preprocessing needed to reproduce the notebook outputs.
 
----
-
-### 4. Financial stress is driven by essential expenses, not discretionary spending
-Average non-essential spending is nearly identical between stressed and non-stressed students, while essential expenses are significantly higher for financially stressed students.  
-This indicates that financial stress is primarily driven by unavoidable living costs rather than discretionary overspending.
-
----
-
-## Recommendations
-
-### For Low-Income Financially Stressed Students
-- Focus on reducing unavoidable costs such as housing, food, and transportation
-- Improve visibility into financial aid, scholarships, and subsidy opportunities
-- Provide tools for optimizing essential spending rather than restricting discretionary purchases
-
----
-
-### For Higher-Income Financially Stressed Students
-- Implement early-warning alerts when essential expenses exceed safe income thresholds
-- Improve budget visibility to detect gradual financial stress before it escalates
-- Encourage proactive rebalancing of expenses rather than reactive cuts
-
----
-
-## Tools & Technologies
-- **Programming Language:** Python
-- **Libraries:** Pandas, NumPy, Matplotlib
-- **Techniques:** Feature engineering, segmentation, sensitivity analysis, behavioral analysis
-
----
-
-## Project Structure
-```text
-student-financial-stress-analysis/
-├── data/
-│   └── student-spending-habits.csv
-├── notebooks/
-│   └── analysis.ipynb
-├── README.md
+## Author
+Sandeep Patnaik
